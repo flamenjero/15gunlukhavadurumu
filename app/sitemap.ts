@@ -13,6 +13,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 1,
     },
+    ...["/hakkinda", "/iletisim", "/gizlilik-politikasi"].map((path) => ({
+      url: absoluteUrl(path),
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.4,
+    })),
     ...cities.map((citySlug) => ({
       url: absoluteUrl(`/${citySlug}`),
       lastModified: now,
