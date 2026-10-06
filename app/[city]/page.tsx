@@ -116,6 +116,8 @@ export default async function CityPage({ params }: CityPageProps) {
         lng={center?.lng}
         elevation={center && center.elevation > 0 ? center.elevation : undefined}
         agriSummary={`${cityName} coğrafyası ve ${monthLabel} takvimine göre hazırlanmış tavsiyeler.`}
+        planHref={`/gezi-plani/${city}`}
+        planPlace={cityName}
         apivice={{
           message: `Arıcı mısınız? ${cityName} kovanlarınızı yapay zeka ve sesli asistanla yönetmek için Apivice’ı indirin`,
         }}

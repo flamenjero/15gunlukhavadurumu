@@ -10,14 +10,14 @@ import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "15 Günlük Hava Durumu ve Mevsimsel Rehber",
   description:
-    "Şehir ve ilçe bazında 15 günlük hava durumu, mevsimsel öneriler ve planlama rehberi.",
+    "Şehir ve ilçe bazında 15 günlük hava durumu, tatil tarihinize göre geçmiş yıllardan beklenen hava ve mevsimsel rehber.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "15 Günlük Hava Durumu ve Mevsimsel Rehber",
     description:
-      "Şehir ve ilçe bazında 15 günlük hava durumu, mevsimsel öneriler ve planlama rehberi.",
+      "Şehir ve ilçe bazında 15 günlük hava durumu, tatil tarihinize göre geçmiş yıllardan beklenen hava ve mevsimsel rehber.",
     url: absoluteUrl("/"),
   },
 };
@@ -56,7 +56,7 @@ export default async function HomePage() {
           url: SITE_URL,
           inLanguage: "tr-TR",
           description:
-            "Türkiye genelinde şehir ve ilçe bazlı 15 günlük hava durumu ile mevsimsel rehber.",
+            "Türkiye genelinde şehir ve ilçe bazlı 15 günlük hava durumu, tatil tarihi planı ve mevsimsel rehber.",
         }}
       />
 
@@ -75,7 +75,11 @@ export default async function HomePage() {
           </h1>
           <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
             Şehir veya ilçe adını yazın; 15 günlük tahmin ve mevsime uygun tarla
-            önerilerine anında ulaşın.
+            önerilerine anında ulaşın. Tatil tarihiniz uzaktaysa{" "}
+            <Link href="/gezi-plani" className="font-semibold text-sky-700 hover:text-sky-800">
+              gezi planı
+            </Link>{" "}
+            ile o günlerin geçmiş yıllarda nasıl geçtiğine bakın.
           </p>
         </header>
 

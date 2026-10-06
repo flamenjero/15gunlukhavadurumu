@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import AdSlot from "@/components/AdSlot";
 import AgriAdvice from "@/components/AgriAdvice";
 import type { ApiviceBannerProps } from "@/components/ApiviceBanner";
@@ -24,6 +25,8 @@ export interface SeoAdLayoutProps {
   lat?: number;
   lng?: number;
   elevation?: number;
+  planHref?: string;
+  planPlace?: string;
 }
 
 export default function SeoAdLayout({
@@ -43,6 +46,8 @@ export default function SeoAdLayout({
   lat,
   lng,
   elevation,
+  planHref,
+  planPlace,
 }: SeoAdLayoutProps) {
   const forecastDays = days;
 
@@ -74,6 +79,19 @@ export default function SeoAdLayout({
                 {title}
               </h1>
               <p className="mt-2 max-w-2xl text-slate-600">{description}</p>
+              {planHref && planPlace ? (
+                <p className="mt-4 rounded-2xl border border-sky-100 bg-white/80 px-4 py-3 text-sm leading-relaxed text-slate-700">
+                  <Link
+                    href={planHref}
+                    className="font-semibold text-sky-700 hover:text-sky-800"
+                  >
+                    {planPlace} tatil ve gezi hava durumu
+                  </Link>
+                  {" — "}
+                  seçtiğiniz tarihlerde havanın nasıl olabileceğini 2016–2025
+                  verisiyle planlayın.
+                </p>
+              ) : null}
             </header>
 
             {today ? (
