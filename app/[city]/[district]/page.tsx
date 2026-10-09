@@ -136,6 +136,8 @@ export default async function DistrictPage({ params }: DistrictPageProps) {
         lng={place?.lng}
         elevation={place && place.elevation > 0 ? place.elevation : undefined}
         agriSummary={`${districtName} / ${cityName} mikroiklimi ve rakımına göre filtrelenmiş tarımsal öneriler.`}
+        planHref={`/gezi-plani/${city}/${district}`}
+        planPlace={`${districtName}, ${cityName}`}
         apivice={{
           message: `Arıcı mısınız? ${districtName} (${cityName}) kovanlarınızı yapay zeka ve sesli asistanla yönetmek için Apivice’ı indirin`,
         }}

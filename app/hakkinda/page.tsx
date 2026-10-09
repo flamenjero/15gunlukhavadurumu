@@ -45,6 +45,18 @@ export default function AboutPage() {
         </p>
       </section>
       <section className="space-y-3">
+        <h2 className="text-xl font-semibold text-slate-900">Tatil ve gezi planı</h2>
+        <p>
+          15 günden uzak bir tarih için günlük tahmin güvenilir olmaz.{" "}
+          <Link href="/gezi-plani" className="font-medium text-sky-700 hover:text-sky-800">
+            Gezi planı
+          </Link>{" "}
+          seçtiğiniz yerde 2016–2025 arasındaki aynı takvim günlerinin sıcaklık
+          ve yağış ortalamasını gösterir. Tarih önümüzdeki 15 günün içindeyse
+          güncel tahmin de yanında durur.
+        </p>
+      </section>
+      <section className="space-y-3">
         <h2 className="text-xl font-semibold text-slate-900">Reklamlar</h2>
         <p>
           Sayfalarda Google AdSense reklamları yer alabilir. Reklamların nasıl

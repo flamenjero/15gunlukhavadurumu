@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import AdSlot from "@/components/AdSlot";
+import { adsenseSlotFor } from "@/lib/site";
 import AgriAdvice from "@/components/AgriAdvice";
 import type { ApiviceBannerProps } from "@/components/ApiviceBanner";
 import WeatherCard, {
@@ -24,6 +26,8 @@ export interface SeoAdLayoutProps {
   lat?: number;
   lng?: number;
   elevation?: number;
+  planHref?: string;
+  planPlace?: string;
 }
 
 export default function SeoAdLayout({
@@ -43,8 +47,13 @@ export default function SeoAdLayout({
   lat,
   lng,
   elevation,
+  planHref,
+  planPlace,
 }: SeoAdLayoutProps) {
   const forecastDays = days;
+  const skyscraperSlot = adsenseSlotFor("skyscraper");
+  const leaderboardSlot = adsenseSlotFor("leaderboard");
+  const bannerSlot = adsenseSlotFor("banner");
 
   return (
     <div className="flex-1 bg-[linear-gradient(180deg,#f0f9ff_0%,#f8fafc_42%,#ecfdf5_100%)]">
@@ -52,20 +61,24 @@ export default function SeoAdLayout({
         <div className="mb-6">{breadcrumb}</div>
 
         <div className="lg:grid lg:grid-cols-12 lg:gap-6">
-          <aside className="hidden lg:col-span-2 lg:block">
-            <div className="sticky top-24">
-              <AdSlot
-                id={`${adPrefix}-left-sky`}
-                label="Sol gökdelen"
-                size="skyscraper"
-              />
-            </div>
-          </aside>
+          {skyscraperSlot ? (
+            <aside className="hidden lg:col-span-2 lg:block">
+              <div className="sticky top-24">
+                <AdSlot
+                  id={`${adPrefix}-left-sky`}
+                  slot={skyscraperSlot}
+                  size="skyscraper"
+                />
+              </div>
+            </aside>
+          ) : null}
 
-          <main className="flex flex-col gap-6 lg:col-span-8">
+          <main
+            className={`flex flex-col gap-6 ${skyscraperSlot ? "lg:col-span-8" : "lg:col-span-12"}`}
+          >
             <AdSlot
               id={`${adPrefix}-top-banner`}
-              label="Üst banner"
+              slot={leaderboardSlot}
               size="leaderboard"
             />
 
@@ -74,6 +87,19 @@ export default function SeoAdLayout({
                 {title}
               </h1>
               <p className="mt-2 max-w-2xl text-slate-600">{description}</p>
+              {planHref && planPlace ? (
+                <p className="mt-4 rounded-2xl border border-sky-100 bg-white/80 px-4 py-3 text-sm leading-relaxed text-slate-700">
+                  <Link
+                    href={planHref}
+                    className="font-semibold text-sky-700 hover:text-sky-800"
+                  >
+                    {planPlace} tatil ve gezi hava durumu
+                  </Link>
+                  {" — "}
+                  seçtiğiniz tarihlerde havanın nasıl olabileceğini 2016–2025
+                  verisiyle planlayın.
+                </p>
+              ) : null}
             </header>
 
             {today ? (
@@ -92,7 +118,7 @@ export default function SeoAdLayout({
 
             <AdSlot
               id={`${adPrefix}-in-article`}
-              label="İçerik içi reklam"
+              slot={bannerSlot}
               size="banner"
             />
 
@@ -130,20 +156,22 @@ export default function SeoAdLayout({
 
             <AdSlot
               id={`${adPrefix}-bottom-banner`}
-              label="Alt banner"
+              slot={leaderboardSlot}
               size="leaderboard"
             />
           </main>
 
-          <aside className="hidden lg:col-span-2 lg:block">
-            <div className="sticky top-24">
-              <AdSlot
-                id={`${adPrefix}-right-sky`}
-                label="Sağ gökdelen"
-                size="skyscraper"
-              />
-            </div>
-          </aside>
+          {skyscraperSlot ? (
+            <aside className="hidden lg:col-span-2 lg:block">
+              <div className="sticky top-24">
+                <AdSlot
+                  id={`${adPrefix}-right-sky`}
+                  slot={skyscraperSlot}
+                  size="skyscraper"
+                />
+              </div>
+            </aside>
+          ) : null}
         </div>
       </div>
     </div>
