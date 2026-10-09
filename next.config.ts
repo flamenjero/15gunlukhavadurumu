@@ -10,9 +10,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/:path*",
+        // ads.txt must return 200 on the www host. A redirect to the apex
+        // makes AdSense report the file as missing for a www property.
+        source: "/:path((?!ads\\.txt$).*)",
         has: [{ type: "host", value: "www.15gunlukhavadurumu.org" }],
-        destination: "https://15gunlukhavadurumu.org/:path*",
+        destination: "https://15gunlukhavadurumu.org/:path",
         permanent: true,
       },
     ];

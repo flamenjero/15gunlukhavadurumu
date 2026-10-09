@@ -1,13 +1,18 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { ADSENSE_CLIENT_ID } from "@/lib/site";
+
 export type AdSlotSize = "banner" | "rectangle" | "leaderboard" | "skyscraper";
 
 export interface AdSlotProps {
   id: string;
-  label?: string;
+  /** Numeric AdSense ad unit id. Nothing is rendered when this is empty. */
+  slot?: string | null;
   size?: AdSlotSize;
   className?: string;
 }
 
-/** Sabit rezerv boyutları — AdSense geç yüklense bile CLS üretmez */
 const sizeClasses: Record<AdSlotSize, string> = {
   banner: "min-h-[90px] min-w-full w-full sm:min-h-[100px]",
   leaderboard: "min-h-[90px] min-w-full w-full sm:min-h-[120px]",
@@ -15,45 +20,47 @@ const sizeClasses: Record<AdSlotSize, string> = {
   skyscraper: "min-h-[600px] min-w-[160px] w-full max-w-[160px]",
 };
 
+declare global {
+  interface Window {
+    adsbygoogle?: Record<string, unknown>[];
+  }
+}
+
 export default function AdSlot({
   id,
-  label = "Reklam alanı",
+  slot,
   size = "banner",
   className = "",
 }: AdSlotProps) {
-  return (
-    <aside
-      id={id}
-      role="complementary"
-      aria-label={label}
-      aria-busy="true"
-      className={`relative isolate flex overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-100 ${sizeClasses[size]} ${className}`}
-    >
-      {/* Skeleton: reklam yüklenene kadar alanı doldurur */}
-      <div
-        aria-hidden
-        className="absolute inset-0 animate-pulse bg-gradient-to-br from-slate-100 via-slate-200/80 to-slate-100"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-3 top-3 h-2 animate-pulse rounded-full bg-slate-300/70"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-x-6 bottom-4 h-2 animate-pulse rounded-full bg-slate-300/50"
-      />
+  const insRef = useRef<HTMLModElement>(null);
 
-      <div className="relative z-10 m-auto px-3 py-4 text-center">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
-          Sponsored
-        </p>
-        <p className="mt-1 text-xs font-medium text-slate-500 sm:text-sm">
-          {label}
-        </p>
-        <p className="mt-1 text-[10px] text-slate-400">
-          min boyut rezervli · CLS korumalı
-        </p>
-      </div>
+  useEffect(() => {
+    const ins = insRef.current;
+    if (!slot || !ins || ins.dataset.adsbygoogleStatus) return;
+
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch {
+      // The ad script can be blocked; the reserved box stays empty.
+    }
+  }, [slot]);
+
+  if (!slot) return null;
+
+  return (
+    <aside id={id} aria-label="Reklam" className={className}>
+      <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+        Reklam
+      </p>
+      <ins
+        ref={insRef}
+        className={`adsbygoogle block overflow-hidden ${sizeClasses[size]}`}
+        style={{ display: "block" }}
+        data-ad-client={ADSENSE_CLIENT_ID}
+        data-ad-slot={slot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
     </aside>
   );
 }

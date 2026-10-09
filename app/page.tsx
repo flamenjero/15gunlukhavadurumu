@@ -5,7 +5,7 @@ import ApiviceBanner from "@/components/ApiviceBanner";
 import JsonLd from "@/components/JsonLd";
 import LocationSearch from "@/components/LocationSearch";
 import { listCitiesRemote } from "@/lib/locationService";
-import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site";
+import { SITE_NAME, SITE_URL, absoluteUrl, adsenseSlotFor } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "15 Günlük Hava Durumu ve Mevsimsel Rehber",
@@ -108,7 +108,11 @@ export default async function HomePage() {
           </section>
         ) : null}
 
-        <AdSlot id="home-top-ad" label="Ana sayfa reklam alanı" size="banner" />
+        <AdSlot
+          id="home-top-ad"
+          slot={adsenseSlotFor("banner")}
+          size="banner"
+        />
 
         <ApiviceBanner />
       </main>
