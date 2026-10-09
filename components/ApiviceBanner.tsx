@@ -13,7 +13,7 @@ export interface ApiviceBannerProps {
 export default function ApiviceBanner({
   message = "Arıcı mısınız? Kovanlarınızı yapay zeka ve sesli asistanla yönetmek için Apivice’ı indirin",
   ctaLabel = "Apivice’ı indir",
-  href = "https://apivice.com",
+  href = "https://play.google.com/store/apps/details?id=com.apivice.app",
   className = "",
 }: ApiviceBannerProps) {
   return (
