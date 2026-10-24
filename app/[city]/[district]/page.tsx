@@ -127,6 +127,10 @@ export default async function DistrictPage({ params }: DistrictPageProps) {
             ? `${place.label} · ${place.lat.toFixed(3)}, ${place.lng.toFixed(3)} · Open-Meteo`
             : "İlçe ölçeğinde anlık özet"
         }
+        lat={place?.lat}
+        lng={place?.lng}
+        planHref={`/gezi-plani/${city}/${district}`}
+        planPlace={`${districtName}, ${cityName}`}
         apivice={{
           message: `Arıcı mısınız? ${districtName} (${cityName}) kovanlarınızı yapay zeka ve sesli asistanla yönetmek için Apivice’ı indirin`,
         }}

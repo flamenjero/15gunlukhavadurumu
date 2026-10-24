@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
-import TripPlanScreen, { tripRangeLabel } from "@/components/TripPlanScreen";
+import TripPlanScreen, {
+  tripQueryIsIndexable,
+  tripRangeLabel,
+} from "@/components/TripPlanScreen";
 import { findLocationRemote } from "@/lib/locationService";
 import { absoluteUrl } from "@/lib/site";
 import { slugToTitle } from "@/lib/slug";
@@ -33,7 +36,9 @@ export async function generateMetadata({
     title,
     description,
     alternates: { canonical: path },
-    robots: { index: false, follow: true },
+    robots: tripQueryIsIndexable(query.baslangic, query.bitis)
+      ? { index: true, follow: true }
+      : { index: false, follow: true },
     openGraph: {
       title,
       description,

@@ -107,6 +107,10 @@ export default async function CityPage({ params }: CityPageProps) {
         todaySubtitle={
           center ? `${cityName} · Open-Meteo` : "Şehir geneli anlık özet"
         }
+        lat={center?.lat}
+        lng={center?.lng}
+        planHref={`/gezi-plani/${city}`}
+        planPlace={cityName}
         apivice={{
           message: `Arıcı mısınız? ${cityName} kovanlarınızı yapay zeka ve sesli asistanla yönetmek için Apivice’ı indirin`,
         }}

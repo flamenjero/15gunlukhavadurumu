@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 import AdSlot from "@/components/AdSlot";
 import ApiviceBanner, {
   type ApiviceBannerProps,
 } from "@/components/ApiviceBanner";
+import PlaceCalendar from "@/components/PlaceCalendar";
 import { adsenseSlotFor } from "@/lib/site";
 import WeatherCard, {
   TodayWeatherPanel,
@@ -21,6 +23,10 @@ export interface SeoAdLayoutProps {
   apivice?: ApiviceBannerProps;
   adPrefix: string;
   afterToday?: ReactNode;
+  lat?: number;
+  lng?: number;
+  planHref?: string;
+  planPlace?: string;
 }
 
 export default function SeoAdLayout({
@@ -35,6 +41,10 @@ export default function SeoAdLayout({
   apivice,
   adPrefix,
   afterToday,
+  lat,
+  lng,
+  planHref,
+  planPlace,
 }: SeoAdLayoutProps) {
   const forecastDays = days;
   const skyscraperSlot = adsenseSlotFor("skyscraper");
@@ -121,6 +131,36 @@ export default function SeoAdLayout({
                 </p>
               )}
             </section>
+
+            {planHref && planPlace ? (
+              <Link
+                href={planHref}
+                className="group block rounded-3xl border border-stone-200 bg-stone-50 px-6 py-7 transition hover:border-stone-400 hover:bg-white sm:px-8"
+              >
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">
+                  Tatil
+                </p>
+                <p className="mt-2 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
+                  {planPlace} gezi planı
+                </p>
+                <p className="mt-3 max-w-xl text-sm leading-relaxed text-stone-600">
+                  Tarih seçin. Aynı günlerin 2016–2025 ortalaması, çanta notuyla
+                  birlikte durur.
+                </p>
+                <p className="mt-5 text-sm font-semibold text-stone-900">
+                  Planı aç
+                  <span className="ml-2 inline-block transition group-hover:translate-x-0.5">
+                    →
+                  </span>
+                </p>
+              </Link>
+            ) : null}
+
+            {lat != null && lng != null ? (
+              <div className="rounded-3xl border border-stone-200 bg-stone-50 px-4 py-6 sm:px-6 sm:py-8">
+                <PlaceCalendar placeName={locationName} lat={lat} lng={lng} />
+              </div>
+            ) : null}
 
             <ApiviceBanner {...apivice} />
 

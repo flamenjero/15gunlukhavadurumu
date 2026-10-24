@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/gezi-plani" },
-  robots: { index: false, follow: true },
   openGraph: {
     title,
     description,

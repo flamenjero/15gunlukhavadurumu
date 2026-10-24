@@ -99,6 +99,46 @@ export default async function HomePage() {
 
         <HomeSpotlight />
 
+        <section aria-labelledby="guides" className="grid gap-4 md:grid-cols-2">
+          <h2 id="guides" className="sr-only">
+            Gezi planı ve ay takvimi
+          </h2>
+          <Link
+            href="/gezi-plani"
+            className="group rounded-3xl border border-stone-200 bg-stone-50 px-6 py-8 transition hover:border-stone-400 hover:bg-white sm:px-8"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">
+              Tatil
+            </p>
+            <p className="mt-3 text-3xl font-semibold tracking-tight text-stone-900">
+              Gezi planı
+            </p>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-stone-600">
+              Gideceğiniz günleri seçin. O yerde aynı günler son on yılda nasıl
+              geçmiş, burada durur.
+            </p>
+            <p className="mt-6 text-sm font-semibold text-stone-900">
+              Planı aç →
+            </p>
+          </Link>
+          <Link
+            href="/ay-takvimi"
+            className="group rounded-3xl border border-stone-900 bg-stone-900 px-6 py-8 text-stone-50 transition hover:bg-stone-800 sm:px-8"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-400">
+              Yıl boyu
+            </p>
+            <p className="mt-3 text-3xl font-semibold tracking-tight">
+              Ay takvimi
+            </p>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-stone-300">
+              On iki ayın gündüzü, gecesi ve yağışlı gün oranı. İl seçin, yılı
+              görün.
+            </p>
+            <p className="mt-6 text-sm font-semibold text-white">Takvimi aç →</p>
+          </Link>
+        </section>
+
         {popular.length > 0 ? (
           <section aria-labelledby="popular-cities" className="space-y-4">
             <h2

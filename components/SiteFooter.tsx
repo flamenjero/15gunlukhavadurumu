@@ -2,6 +2,8 @@ import Link from "next/link";
 import { SITE_NAME } from "@/lib/site";
 
 const LINKS = [
+  { href: "/gezi-plani", label: "Gezi planı" },
+  { href: "/ay-takvimi", label: "Ay takvimi" },
   { href: "/hakkinda", label: "Hakkında" },
   { href: "/iletisim", label: "İletişim" },
   { href: "/gizlilik-politikasi", label: "Gizlilik politikası" },
