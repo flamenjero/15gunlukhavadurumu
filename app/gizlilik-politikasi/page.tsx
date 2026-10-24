@@ -54,9 +54,8 @@ export default function PrivacyPage() {
             için saklanmaz.
           </li>
           <li>
-            Seçtiğiniz yerin enlem ve boylamı, 15 günlük tahmini ve gezi
-            planındaki geçmiş hava ortalamasını almak için Open-Meteo
-            hizmetine gönderilir. Tarayıcınızın konumu istenmez.
+            Seçtiğiniz yerin enlem ve boylamı, 15 günlük tahmini almak için
+            Open-Meteo hizmetine gönderilir. Tarayıcınızın konumu istenmez.
           </li>
           <li>
             Barındırma hizmeti; güvenlik ve işletim için IP adresi, tarayıcı

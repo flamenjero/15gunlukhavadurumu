@@ -19,7 +19,7 @@ export async function generateMetadata({
   const cityName = center?.cityName ?? slugToTitle(city);
   const path = `/${city}`;
   const title = `${cityName} 15 Günlük Hava Durumu`;
-  const description = `${cityName} için 15 günlük hava tahmini ve mevsimsel rehber.`;
+  const description = `${cityName} için 15 günlük hava tahmini.`;
 
   return {
     title,
@@ -42,10 +42,6 @@ export default async function CityPage({ params }: CityPageProps) {
   const center = await findCityCenterRemote(city);
   const cityName = center?.cityName ?? slugToTitle(city);
   const now = new Date();
-  const monthLabel = now.toLocaleDateString("tr-TR", {
-    month: "long",
-    year: "numeric",
-  });
 
   const forecast =
     center != null
@@ -65,7 +61,7 @@ export default async function CityPage({ params }: CityPageProps) {
             name: `${cityName} 15 Günlük Hava Durumu`,
             url: pageUrl,
             inLanguage: "tr-TR",
-            description: `${cityName} için 15 günlük hava tahmini ve mevsimsel rehber.`,
+            description: `${cityName} için 15 günlük hava tahmini.`,
           },
           {
             "@context": "https://schema.org",
@@ -103,7 +99,7 @@ export default async function CityPage({ params }: CityPageProps) {
           </nav>
         }
         title={`${cityName} 15 Günlük Hava Durumu`}
-        description={`${monthLabel} için yerel tahmin ve mevsimsel öneriler.`}
+        description={`${cityName} için 15 günlük hava tahmini.`}
         locationName={cityName}
         today={today}
         days={days}
@@ -111,13 +107,6 @@ export default async function CityPage({ params }: CityPageProps) {
         todaySubtitle={
           center ? `${cityName} · Open-Meteo` : "Şehir geneli anlık özet"
         }
-        monthLabel={monthLabel}
-        lat={center?.lat}
-        lng={center?.lng}
-        elevation={center && center.elevation > 0 ? center.elevation : undefined}
-        agriSummary={`${cityName} coğrafyası ve ${monthLabel} takvimine göre hazırlanmış tavsiyeler.`}
-        planHref={`/gezi-plani/${city}`}
-        planPlace={cityName}
         apivice={{
           message: `Arıcı mısınız? ${cityName} kovanlarınızı yapay zeka ve sesli asistanla yönetmek için Apivice’ı indirin`,
         }}
