@@ -1,10 +1,8 @@
 import ApiviceBanner, {
   type ApiviceBannerProps,
 } from "@/components/ApiviceBanner";
-import {
-  evaluateConditions,
-  rankTipsByCategory,
-} from "@/lib/adviceEngine";
+import { evaluateConditions, rankTipsByCategory } from "@/lib/adviceEngine";
+import { explainTipSelection } from "@/lib/placeBrief";
 import { fetchWeatherContext } from "@/lib/open-meteo";
 import { supabase } from "@/lib/supabaseClient";
 import type { AgriculturalTip, Database } from "@/types/supabase";
@@ -94,10 +92,12 @@ function HiveIcon() {
 
 function TipBody({
   tip,
+  why,
   emptyMessage,
   tone,
 }: {
   tip: AgriculturalTip | null;
+  why?: string | null;
   emptyMessage: string;
   tone: "green" | "amber";
 }) {
@@ -125,6 +125,11 @@ function TipBody({
       <p className={`mt-2 text-sm leading-relaxed ${bodyClass}`}>
         {tip.content}
       </p>
+      {why ? (
+        <p className={`mt-3 text-xs leading-relaxed ${bodyClass}`}>
+          Bu not seçildi çünkü {why}.
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -152,6 +157,14 @@ export default async function AgriAdvice({
 
   const tarimTip = rankTipsByCategory(matched, "tarim")[0] ?? null;
   const aricilikTip = rankTipsByCategory(matched, "aricilik")[0] ?? null;
+  const tarimWhy =
+    tarimTip && weatherContext
+      ? explainTipSelection(tarimTip.conditions, weatherContext)
+      : null;
+  const aricilikWhy =
+    aricilikTip && weatherContext
+      ? explainTipSelection(aricilikTip.conditions, weatherContext)
+      : null;
 
   const contextFailed = weatherContext == null;
   const tarimEmpty = contextFailed
@@ -195,7 +208,12 @@ export default async function AgriAdvice({
               </p>
             </div>
           </div>
-          <TipBody tip={tarimTip} emptyMessage={tarimEmpty} tone="green" />
+          <TipBody
+            tip={tarimTip}
+            why={tarimWhy}
+            emptyMessage={tarimEmpty}
+            tone="green"
+          />
         </article>
 
         <article className="flex min-h-[22rem] flex-col rounded-2xl border border-amber-200 bg-amber-50 p-4 sm:p-5">
@@ -213,6 +231,7 @@ export default async function AgriAdvice({
 
           <TipBody
             tip={aricilikTip}
+            why={aricilikWhy}
             emptyMessage={aricilikEmpty}
             tone="amber"
           />
