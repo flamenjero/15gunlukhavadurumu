@@ -3,6 +3,7 @@ import Link from "next/link";
 import AdSlot from "@/components/AdSlot";
 import { adsenseSlotFor } from "@/lib/site";
 import AgriAdvice from "@/components/AgriAdvice";
+import PlaceBrief from "@/components/PlaceBrief";
 import type { ApiviceBannerProps } from "@/components/ApiviceBanner";
 import WeatherCard, {
   TodayWeatherPanel,
@@ -101,6 +102,15 @@ export default function SeoAdLayout({
                 </p>
               ) : null}
             </header>
+
+            <PlaceBrief
+              placeName={locationName}
+              monthLabel={monthLabel}
+              days={forecastDays}
+              lat={lat}
+              lng={lng}
+              elevation={elevation}
+            />
 
             {today ? (
               <TodayWeatherPanel
