@@ -68,11 +68,16 @@ export default function SeoAdLayout({
               size="leaderboard"
             />
 
-            <header>
-              <h1 className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+            <header className="overflow-hidden rounded-3xl bg-gradient-to-br from-sky-700 via-sky-500 to-cyan-400 px-5 py-7 text-white shadow-lg shadow-sky-900/15 sm:px-8 sm:py-9">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-100">
+                15 günlük tahmin
+              </p>
+              <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-5xl">
                 {title}
               </h1>
-              <p className="mt-2 max-w-2xl text-slate-600">{description}</p>
+              <p className="mt-3 max-w-2xl text-sm text-sky-50 sm:text-base">
+                {description}
+              </p>
             </header>
 
             {today ? (
