@@ -20,7 +20,7 @@ export async function generateMetadata({
   const districtName = place?.districtName ?? slugToTitle(district);
   const path = `/${city}/${district}`;
   const title = `${districtName} / ${cityName} 15 Günlük Hava Durumu`;
-  const description = `${districtName} / ${cityName} için detaylı 15 günlük hava tahmini ve mevsimsel rehber.`;
+  const description = `${districtName} / ${cityName} için 15 günlük hava tahmini.`;
 
   return {
     title,
@@ -30,7 +30,7 @@ export async function generateMetadata({
     },
     openGraph: {
       title,
-      description: `${districtName} ilçesi (${cityName}) yerel hava durumu ve mevsimsel rehber.`,
+      description: `${districtName} ilçesi (${cityName}) için 15 günlük hava tahmini.`,
       url: absoluteUrl(path),
       type: "website",
       locale: "tr_TR",
@@ -44,10 +44,6 @@ export default async function DistrictPage({ params }: DistrictPageProps) {
   const cityName = place?.cityName ?? slugToTitle(city);
   const districtName = place?.districtName ?? slugToTitle(district);
   const now = new Date();
-  const monthLabel = now.toLocaleDateString("tr-TR", {
-    month: "long",
-    year: "numeric",
-  });
 
   const forecast =
     place != null
@@ -71,7 +67,7 @@ export default async function DistrictPage({ params }: DistrictPageProps) {
             name: title,
             url: pageUrl,
             inLanguage: "tr-TR",
-            description: `${districtName} / ${cityName} için 15 günlük yerel tahmin ve mevsimsel rehber.`,
+            description: `${districtName} / ${cityName} için 15 günlük hava tahmini.`,
           },
           {
             "@context": "https://schema.org",
@@ -121,7 +117,7 @@ export default async function DistrictPage({ params }: DistrictPageProps) {
           </nav>
         }
         title={title}
-        description={`${districtName} / ${cityName} için 15 günlük yerel tahmin ve ${monthLabel} mevsimsel rehberi.`}
+        description={`${districtName} / ${cityName} için 15 günlük hava tahmini.`}
         locationName={locationName}
         today={today}
         days={days}
@@ -131,11 +127,8 @@ export default async function DistrictPage({ params }: DistrictPageProps) {
             ? `${place.label} · ${place.lat.toFixed(3)}, ${place.lng.toFixed(3)} · Open-Meteo`
             : "İlçe ölçeğinde anlık özet"
         }
-        monthLabel={monthLabel}
         lat={place?.lat}
         lng={place?.lng}
-        elevation={place && place.elevation > 0 ? place.elevation : undefined}
-        agriSummary={`${districtName} / ${cityName} mikroiklimi ve rakımına göre filtrelenmiş tarımsal öneriler.`}
         planHref={`/gezi-plani/${city}/${district}`}
         planPlace={`${districtName}, ${cityName}`}
         apivice={{

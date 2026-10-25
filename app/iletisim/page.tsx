@@ -43,7 +43,7 @@ export default function ContactPage() {
         <h2 className="text-xl font-semibold text-slate-900">Hangi konularda yazabilirsiniz</h2>
         <ul className="list-disc space-y-2 pl-5">
           <li>Yanlış il, ilçe veya bağlantı düzeltmesi</li>
-          <li>Tahmin veya mevsimsel notlardaki içerik hataları</li>
+          <li>Tahminlerdeki içerik hataları</li>
           <li>Reklam ve iş birliği</li>
           <li>
             <Link href="/gizlilik-politikasi" className="font-medium text-sky-700 hover:text-sky-800">

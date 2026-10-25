@@ -14,7 +14,11 @@ import {
   type LocationPlace,
 } from "@/lib/locationService";
 
-export default function LocationSearch() {
+export default function LocationSearch({
+  prominent = false,
+}: {
+  prominent?: boolean;
+}) {
   const router = useRouter();
   const listId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -79,7 +83,10 @@ export default function LocationSearch() {
   }
 
   return (
-    <div ref={rootRef} className="relative mx-auto w-full max-w-xl">
+    <div
+      ref={rootRef}
+      className={`relative mx-auto w-full ${prominent ? "max-w-3xl" : "max-w-xl"}`}
+    >
       <form onSubmit={onSubmit} className="flex flex-col gap-3 sm:flex-row">
         <div className="relative flex-1">
           <label htmlFor="location-search" className="sr-only">
@@ -119,7 +126,7 @@ export default function LocationSearch() {
               }
             }}
             placeholder="Örn. Göle, Yenişehir, Çeşme…"
-            className="h-12 w-full rounded-2xl border border-sky-100 bg-white px-4 text-slate-900 shadow-sm outline-none ring-sky-300 placeholder:text-slate-400 focus:ring-2"
+            className={`w-full rounded-2xl border border-sky-100 bg-white text-slate-900 shadow-sm outline-none ring-sky-300 placeholder:text-slate-400 focus:ring-2 ${prominent ? "h-14 px-5 text-base" : "h-12 px-4"}`}
             autoComplete="off"
           />
 
@@ -168,7 +175,7 @@ export default function LocationSearch() {
 
         <button
           type="submit"
-          className="h-12 rounded-2xl bg-sky-600 px-6 text-sm font-semibold text-white transition hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
+          className={`rounded-2xl bg-sky-600 font-semibold text-white transition hover:bg-sky-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600 ${prominent ? "h-14 px-8 text-base" : "h-12 px-6 text-sm"}`}
         >
           Hava durumunu gör
         </button>

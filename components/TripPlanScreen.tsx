@@ -1,5 +1,6 @@
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import MonthCalendar from "@/components/MonthCalendar";
 import TripPlanForm from "@/components/TripPlanForm";
 import type { LocationPlace } from "@/lib/locationService";
 import { absoluteUrl } from "@/lib/site";
@@ -12,7 +13,6 @@ import {
   formatTripRange,
   istanbulToday,
   parseTripRange,
-  type MonthClimate,
   type TripOutlook,
 } from "@/lib/tripClimate";
 
@@ -132,16 +132,18 @@ export default async function TripPlanScreen({
           </ol>
         </nav>
 
-        <header>
-          <p className="text-sm font-semibold uppercase tracking-[0.16em] text-sky-700">
-            Geçmiş yıllara göre
+        <header className="rounded-3xl border border-stone-200 bg-stone-50 px-6 py-8 sm:px-8">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">
+            Gezi planı
           </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-stone-900 sm:text-5xl">
             {placeTitle
               ? `${placeTitle} tatil ve gezi hava durumu`
               : "Tatil ve gezi hava durumu"}
           </h1>
-          <p className="mt-3 text-base leading-relaxed text-slate-600">{intro}</p>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-stone-600">
+            {intro}
+          </p>
         </header>
 
         <TripPlanForm
@@ -185,7 +187,17 @@ export default async function TripPlanScreen({
         {outlook ? <TripResult outlook={outlook} placeTitle={placeTitle} /> : null}
 
         {monthly ? (
-          <MonthTable months={monthly} placeTitle={placeTitle} />
+          <section className="space-y-4 rounded-3xl border border-stone-200 bg-stone-50 px-4 py-6 sm:px-6">
+            <header>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-stone-500">
+                Ay takvimi · {CLIMATE_RANGE_LABEL}
+              </p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
+                {placeTitle} aylara göre
+              </h2>
+            </header>
+            <MonthCalendar months={monthly} />
+          </section>
         ) : null}
 
         {forecastHref ? (
@@ -299,53 +311,6 @@ function TripResult({
           </li>
         ))}
       </ol>
-    </section>
-  );
-}
-
-function MonthTable({
-  months,
-  placeTitle,
-}: {
-  months: MonthClimate[];
-  placeTitle: string;
-}) {
-  return (
-    <section className="space-y-3">
-      <h2 className="text-xl font-semibold text-slate-900">
-        {placeTitle} aylara göre tipik hava
-      </h2>
-      <p className="text-sm text-slate-600">
-        {CLIMATE_RANGE_LABEL} günlük kayıtlarının ay ortalaması. Tatil ayı
-        seçerken yağış sütununa bakın.
-      </p>
-      <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
-        <table className="w-full min-w-[28rem] text-left text-sm">
-          <caption className="sr-only">
-            {placeTitle} için {CLIMATE_RANGE_LABEL} aylık sıcaklık ve yağış ihtimali
-          </caption>
-          <thead className="bg-slate-50 text-slate-500">
-            <tr>
-              <th scope="col" className="px-4 py-3 font-medium">Ay</th>
-              <th scope="col" className="px-4 py-3 font-medium">Gündüz</th>
-              <th scope="col" className="px-4 py-3 font-medium">Gece</th>
-              <th scope="col" className="px-4 py-3 font-medium">Yağışlı gün</th>
-            </tr>
-          </thead>
-          <tbody>
-            {months.map((month) => (
-              <tr key={month.month} className="border-t border-slate-100">
-                <th scope="row" className="px-4 py-2.5 font-medium text-slate-800">
-                  {month.label}
-                </th>
-                <td className="px-4 py-2.5">{month.high}°</td>
-                <td className="px-4 py-2.5">{month.low}°</td>
-                <td className="px-4 py-2.5">%{month.rainChance}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </section>
   );
 }

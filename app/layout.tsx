@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    "Türkiye genelinde şehir ve ilçe bazlı 15 günlük hava durumu ile mevsimsel rehber.",
+    "Türkiye genelinde şehir ve ilçe bazlı 15 günlük hava durumu.",
   applicationName: SITE_NAME,
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   openGraph: {
@@ -31,13 +31,13 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: SITE_NAME,
     description:
-      "Türkiye genelinde şehir ve ilçe bazlı 15 günlük hava durumu ile mevsimsel rehber.",
+      "Türkiye genelinde şehir ve ilçe bazlı 15 günlük hava durumu.",
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description:
-      "Türkiye genelinde şehir ve ilçe bazlı 15 günlük hava durumu ile mevsimsel rehber.",
+      "Türkiye genelinde şehir ve ilçe bazlı 15 günlük hava durumu.",
   },
   robots: {
     index: true,
