@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
+import PlaceNarrative from "@/components/PlaceNarrative";
 import SeoAdLayout from "@/components/SeoAdLayout";
 import { findLocationRemote } from "@/lib/locationService";
 import { fetchFifteenDayForecast } from "@/lib/open-meteo";
@@ -27,6 +28,10 @@ export async function generateMetadata({
     description,
     alternates: {
       canonical: path,
+    },
+    robots: {
+      index: false,
+      follow: true,
     },
     openGraph: {
       title,
@@ -131,6 +136,17 @@ export default async function DistrictPage({ params }: DistrictPageProps) {
         lng={place?.lng}
         planHref={`/gezi-plani/${city}/${district}`}
         planPlace={`${districtName}, ${cityName}`}
+        narrative={
+          place ? (
+            <PlaceNarrative
+              placeName={districtName}
+              lat={place.lat}
+              lng={place.lng}
+              elevation={place.elevation}
+              days={days}
+            />
+          ) : null
+        }
         apivice={{
           message: `Arıcı mısınız? ${districtName} (${cityName}) kovanlarınızı yapay zeka ve sesli asistanla yönetmek için Apivice’ı indirin`,
         }}

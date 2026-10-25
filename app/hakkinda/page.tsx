@@ -43,6 +43,22 @@ export default function AboutPage() {
         </p>
       </section>
       <section className="space-y-3">
+        <h2 className="text-xl font-semibold text-slate-900">Rehberler</h2>
+        <p>Sayıların ne anlattığını ve tatil haftasını nasıl seçeceğinizi iki kısa metinde topladık.</p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>
+            <Link href="/15-gunluk-tahmin-nasil-okunur" className="font-medium text-sky-700 hover:text-sky-800">
+              15 günlük tahmin nasıl okunur
+            </Link>
+          </li>
+          <li>
+            <Link href="/tatil-haftasi-nasil-secilir" className="font-medium text-sky-700 hover:text-sky-800">
+              Tatil haftası nasıl seçilir
+            </Link>
+          </li>
+        </ul>
+      </section>
+      <section className="space-y-3">
         <h2 className="text-xl font-semibold text-slate-900">Reklamlar</h2>
         <p>
           Sayfalarda Google AdSense reklamları yer alabilir. Reklamların nasıl

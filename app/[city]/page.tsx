@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import JsonLd from "@/components/JsonLd";
 import SeoAdLayout from "@/components/SeoAdLayout";
-import { findCityCenterRemote } from "@/lib/locationService";
+import PlaceNarrative from "@/components/PlaceNarrative";
+import { findCityCenterRemote, getCityDistrictsRemote } from "@/lib/locationService";
 import { fetchFifteenDayForecast } from "@/lib/open-meteo";
 import { absoluteUrl } from "@/lib/site";
 import { slugToTitle } from "@/lib/slug";
@@ -43,10 +44,12 @@ export default async function CityPage({ params }: CityPageProps) {
   const cityName = center?.cityName ?? slugToTitle(city);
   const now = new Date();
 
-  const forecast =
+  const [forecast, districts] = await Promise.all([
     center != null
-      ? await fetchFifteenDayForecast(center.lat, center.lng)
-      : null;
+      ? fetchFifteenDayForecast(center.lat, center.lng)
+      : Promise.resolve(null),
+    getCityDistrictsRemote(city),
+  ]);
   const days = forecast?.days ?? [];
   const today = days[0] ?? null;
   const pageUrl = absoluteUrl(`/${city}`);
@@ -111,6 +114,21 @@ export default async function CityPage({ params }: CityPageProps) {
         lng={center?.lng}
         planHref={`/gezi-plani/${city}`}
         planPlace={cityName}
+        narrative={
+          center ? (
+            <PlaceNarrative
+              placeName={cityName}
+              lat={center.lat}
+              lng={center.lng}
+              elevation={center.elevation}
+              days={days}
+            />
+          ) : null
+        }
+        districts={districts.map((district) => ({
+          name: district.districtName,
+          href: district.href,
+        }))}
         apivice={{
           message: `Arıcı mısınız? ${cityName} kovanlarınızı yapay zeka ve sesli asistanla yönetmek için Apivice’ı indirin`,
         }}
