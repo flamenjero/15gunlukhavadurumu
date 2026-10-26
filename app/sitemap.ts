@@ -4,7 +4,7 @@ import { absoluteUrl } from "@/lib/site";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const { cities, districts } = await listSitemapEntriesRemote();
+  const { cities } = await listSitemapEntriesRemote();
 
   const entries: MetadataRoute.Sitemap = [
     {
@@ -13,12 +13,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 1,
     },
-    ...["/hakkinda", "/iletisim", "/gizlilik-politikasi", "/gezi-plani", "/ay-takvimi"].map(
+    ...[
+      "/hakkinda",
+      "/iletisim",
+      "/gizlilik-politikasi",
+      "/gezi-plani",
+      "/ay-takvimi",
+      "/15-gunluk-tahmin-nasil-okunur",
+      "/tatil-haftasi-nasil-secilir",
+    ].map(
       (path) => ({
         url: absoluteUrl(path),
         lastModified: now,
         changeFrequency: "monthly" as const,
-        priority: path === "/gezi-plani" || path === "/ay-takvimi" ? 0.8 : 0.4,
+        priority:
+          path === "/gezi-plani" || path === "/ay-takvimi"
+            ? 0.8
+            : path === "/15-gunluk-tahmin-nasil-okunur" || path === "/tatil-haftasi-nasil-secilir"
+              ? 0.6
+              : 0.4,
       }),
     ),
     ...cities.map((citySlug) => ({
@@ -38,12 +51,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: now,
       changeFrequency: "daily" as const,
       priority: 0.8,
-    })),
-    ...districts.map(({ citySlug, districtSlug }) => ({
-      url: absoluteUrl(`/${citySlug}/${districtSlug}`),
-      lastModified: now,
-      changeFrequency: "daily" as const,
-      priority: 0.7,
     })),
   ];
 

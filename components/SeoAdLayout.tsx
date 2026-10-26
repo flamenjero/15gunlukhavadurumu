@@ -27,6 +27,8 @@ export interface SeoAdLayoutProps {
   lng?: number;
   planHref?: string;
   planPlace?: string;
+  narrative?: ReactNode;
+  districts?: { name: string; href: string }[];
 }
 
 export default function SeoAdLayout({
@@ -45,6 +47,8 @@ export default function SeoAdLayout({
   lng,
   planHref,
   planPlace,
+  narrative,
+  districts,
 }: SeoAdLayoutProps) {
   const forecastDays = days;
   const skyscraperSlot = adsenseSlotFor("skyscraper");
@@ -132,6 +136,8 @@ export default function SeoAdLayout({
               )}
             </section>
 
+            {narrative}
+
             {planHref && planPlace ? (
               <Link
                 href={planHref}
@@ -160,6 +166,29 @@ export default function SeoAdLayout({
               <div className="rounded-3xl border border-stone-200 bg-stone-50 px-4 py-6 sm:px-6 sm:py-8">
                 <PlaceCalendar placeName={locationName} lat={lat} lng={lng} />
               </div>
+            ) : null}
+
+            {districts && districts.length > 0 ? (
+              <section aria-labelledby="district-list" className="space-y-3">
+                <h2
+                  id="district-list"
+                  className="text-sm font-semibold uppercase tracking-[0.14em] text-stone-500"
+                >
+                  İlçeler
+                </h2>
+                <ul className="flex flex-wrap gap-2">
+                  {districts.map((district) => (
+                    <li key={district.href}>
+                      <Link
+                        href={district.href}
+                        className="inline-flex rounded-full border border-stone-200 bg-white px-4 py-2 text-sm text-stone-700 transition hover:border-stone-400 hover:text-stone-900"
+                      >
+                        {district.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
             ) : null}
 
             <ApiviceBanner {...apivice} />
